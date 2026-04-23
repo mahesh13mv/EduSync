@@ -21,7 +21,7 @@ const seedData = async () => {
     // 1. Create Admin
     const admin = await User.create({
       name: 'Admin User',
-      email: 'admin@schedulai.com',
+      email: 'admin@edusync.com',
       password: 'Admin@1234',
       role: 'admin'
     });
@@ -31,7 +31,7 @@ const seedData = async () => {
     const teachers = await Teacher.insertMany([
       {
         name: 'Dr. Smith',
-        email: 'smith@schedulai.com',
+        email: 'smith@edusync.com',
         department: 'Computer Science',
         maxHoursPerWeek: 20,
         availability: [
@@ -44,7 +44,7 @@ const seedData = async () => {
       },
       {
         name: 'Prof. Johnson',
-        email: 'johnson@schedulai.com',
+        email: 'johnson@edusync.com',
         department: 'Mathematics',
         maxHoursPerWeek: 15,
         availability: [
@@ -119,7 +119,7 @@ const seedData = async () => {
     // 6. Create Extra Users for testing roles
     const teacherUser = await User.create({
       name: "Dr. Ramesh",
-      email: "teacher@schedulai.com",
+      email: "teacher@edusync.com",
       password: "Teacher@1234",
       role: "teacher",
       teacherId: smith._id
@@ -131,7 +131,7 @@ const seedData = async () => {
 
     await User.create({
       name: "Ravi Kumar",
-      email: "student@schedulai.com",
+      email: "student@edusync.com",
       password: "Student@1234",
       role: "student",
       batchId: cseA._id
