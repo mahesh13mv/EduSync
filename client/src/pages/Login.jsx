@@ -25,14 +25,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    try {
-      const userData = await login({ email, password }).unwrap()
-      dispatch(setCredentials(userData))
-      navigate('/dashboard')
-      toast.success(`Welcome back, ${userData.user.name}!`)
-    } catch (err) {
-      toast.error(err.data?.message || 'Login failed')
-    }
+    const loginPromise = login({ email, password }).unwrap()
+    
+    toast.promise(loginPromise, {
+      loading: 'Authenticating...',
+      success: (data) => {
+        dispatch(setCredentials(data))
+        return `Welcome back, ${data.user.name}!`
+      },
+      error: (err) => err.data?.message || 'Login failed'
+    })
   }
 
   return (

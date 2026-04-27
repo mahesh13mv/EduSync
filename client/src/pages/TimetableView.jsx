@@ -50,6 +50,7 @@ const TimetableView = () => {
   const isLoading = isLoadingById || isLoadingBatch || isLoadingTeacher
   const timetable = timetableData?.data || batchData?.data || teacherData?.data
   const isError = (id && isErrorById) || (!id && !timetable && !isLoading && !isAdmin)
+  const isBatchMissing = user?.role === 'student' && !user?.batchId
 
   const { data: batches } = useGetBatchesQuery(undefined, {
     skip: !isAdmin
@@ -95,11 +96,36 @@ const TimetableView = () => {
     </div>
   )
 
+  if (isBatchMissing) {
+    return (
+      <div className="flex items-center justify-center p-8 bg-amber-50 border border-amber-100 rounded-2xl gap-3 text-amber-700">
+        <AlertCircle size={24} />
+        <div className="flex flex-col">
+          <span className="font-bold text-sm">No Batch Assigned</span>
+          <p className="text-xs opacity-80">Please contact the administrator to assign you to a batch.</p>
+        </div>
+      </div>
+    )
+  }
+
   if (isError) {
     return (
-      <div className="flex items-center justify-center p-8 bg-rose-50 border border-rose-100 rounded-2xl gap-3 text-rose-700">
-        <AlertCircle size={24} />
-        <span className="font-bold text-sm">Timetable not found or access denied.</span>
+      <div className="text-center py-20 space-y-6">
+        <div className="w-20 h-20 bg-rose-50 rounded-3xl flex items-center justify-center text-rose-500 mx-auto border border-rose-100">
+          <AlertCircle size={40} />
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-slate-900">No Timetable Found</h2>
+          <p className="text-slate-500 max-w-sm mx-auto">
+            {user?.role === 'student' 
+              ? "Your batch doesn't have a published timetable for this week yet. Please check back later."
+              : "We couldn't find the timetable you're looking for. It might have been deleted or moved."
+            }
+          </p>
+        </div>
+        <Link to="/dashboard" className="inline-block bg-primary text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+          Back to Dashboard
+        </Link>
       </div>
     )
   }

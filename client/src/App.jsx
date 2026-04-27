@@ -44,7 +44,23 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Toaster position="top-right" />
+      <Toaster 
+        position="top-right" 
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#334155',
+            color: '#fff',
+            borderRadius: '12px',
+          },
+          success: {
+            duration: 3000,
+            theme: {
+              primary: '#0ea5e9',
+            },
+          },
+        }} 
+      />
       <Routes>
         <Route path="/login" element={<Login />} />
         
