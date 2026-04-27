@@ -49,8 +49,11 @@ const TimetableView = () => {
 
   const isLoading = isLoadingById || isLoadingBatch || isLoadingTeacher
   const timetable = timetableData?.data || batchData?.data || teacherData?.data
-  const isError = (id && isErrorById) || (!id && !timetable && !isLoading && !isAdmin)
+  
+  // Refined Error Logic: Only error if we attempted a fetch and it returned nothing/error
+  const isError = (id && isErrorById) || (!id && !timetable && !isLoading && !isAdmin && activeBatchId)
   const isBatchMissing = user?.role === 'student' && !user?.batchId
+  const isBaseRoute = !id && !paramBatchId
 
   const { data: batches } = useGetBatchesQuery(undefined, {
     skip: !isAdmin
@@ -130,13 +133,20 @@ const TimetableView = () => {
     )
   }
 
-  if (!timetable && !id) return (
+  if ((!timetable && isBaseRoute) || (isAdmin && !id && !paramBatchId)) return (
     <div className="text-center py-20 space-y-4">
       <div className="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center text-slate-400 mx-auto">
         <Calendar size={40} />
       </div>
-      <h2 className="text-2xl font-bold text-slate-900">Select a Timetable</h2>
-      <p className="text-slate-500 max-w-sm mx-auto">Please choose a timetable from the dashboard or generate a new one to view the weekly schedule.</p>
+      <h2 className="text-2xl font-bold text-slate-900">
+        {user.role === 'admin' ? 'Manage Timetables' : 'Select a Timetable'}
+      </h2>
+      <p className="text-slate-500 max-w-sm mx-auto">
+        {user.role === 'admin' 
+          ? 'Please go to the dashboard to select a batch or generate a new weekly schedule.'
+          : 'Please choose a timetable from the dashboard to view your weekly schedule.'
+        }
+      </p>
       <Link to="/dashboard" className="inline-block bg-primary text-white px-6 py-2 rounded-xl font-bold">
         Go to Dashboard
       </Link>
