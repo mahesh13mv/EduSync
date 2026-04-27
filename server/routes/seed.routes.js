@@ -51,10 +51,10 @@ router.get('/', async (req, res) => {
 
     // 5. Create Courses
     const courses = await Course.create([
-      { code: 'CS101', name: 'Data Structures', credits: 4, type: 'theory' },
-      { code: 'CS102', name: 'Algorithms', credits: 4, type: 'theory' },
-      { code: 'CS103', name: 'Database Lab', credits: 2, type: 'lab' },
-      { code: 'PH101', name: 'Engineering Physics', credits: 4, type: 'theory' }
+      { code: 'CS101', name: 'Data Structures', credits: 4, hoursPerWeek: 4, courseType: 'theory', requiredRoomType: 'classroom' },
+      { code: 'CS102', name: 'Algorithms', credits: 4, hoursPerWeek: 4, courseType: 'theory', requiredRoomType: 'classroom' },
+      { code: 'CS103', name: 'Database Lab', credits: 2, hoursPerWeek: 3, courseType: 'lab', requiredRoomType: 'lab' },
+      { code: 'PH101', name: 'Engineering Physics', credits: 4, hoursPerWeek: 4, courseType: 'theory', requiredRoomType: 'classroom' }
     ]);
 
     // 6. Link extra users
