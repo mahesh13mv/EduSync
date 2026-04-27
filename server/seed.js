@@ -5,6 +5,7 @@ const Teacher = require('./models/Teacher');
 const Room = require('./models/Room');
 const Course = require('./models/Course');
 const Batch = require('./models/Batch');
+const Timetable = require('./models/Timetable');
 
 const seedData = async () => {
   try {
@@ -17,6 +18,7 @@ const seedData = async () => {
     await Room.deleteMany();
     await Course.deleteMany();
     await Batch.deleteMany();
+    await Timetable.deleteMany();
 
     // 1. Create Admin
     const admin = await User.create({
@@ -61,7 +63,6 @@ const seedData = async () => {
       { name: 'Room 101', capacity: 60, type: 'classroom' },
       { name: 'Room 102', capacity: 40, type: 'classroom' },
       { name: 'Lab A', capacity: 30, type: 'lab', facilities: ['computers'] },
-      { name: 'Lab B', capacity: 30, type: 'lab', facilities: ['projector', 'computers'] },
       { name: 'Seminar Hall', capacity: 150, type: 'seminar_hall', facilities: ['AC', 'projector'] }
     ]);
     console.log('Rooms created');
@@ -79,7 +80,7 @@ const seedData = async () => {
     const cseA = batches[0];
     const cseB = batches[1];
 
-    await Course.insertMany([
+    const courses = await Course.insertMany([
       {
         name: 'Data Structures',
         code: 'CS401',
@@ -137,6 +138,25 @@ const seedData = async () => {
       batchId: cseA._id
     });
     console.log('Extra users created and linked');
+
+    // 7. Create a pre-generated Published Timetable for CSE-A
+    const ds = courses[0];
+    const math = courses[2];
+    const room101 = rooms[0];
+
+    await Timetable.create({
+      batch: cseA._id,
+      weekStartDate: new Date(),
+      status: 'published',
+      slots: [
+        { day: 'Monday', startTime: '09:00', endTime: '10:00', course: ds._id, teacher: smith._id, room: room101._id },
+        { day: 'Monday', startTime: '10:00', endTime: '11:00', course: math._id, teacher: johnson._id, room: room101._id },
+        { day: 'Tuesday', startTime: '11:00', endTime: '12:00', course: ds._id, teacher: smith._id, room: room101._id },
+        { day: 'Wednesday', startTime: '09:00', endTime: '10:00', course: math._id, teacher: johnson._id, room: room101._id },
+        { day: 'Thursday', startTime: '13:00', endTime: '14:00', course: math._id, teacher: johnson._id, room: room101._id }
+      ]
+    });
+    console.log('Sample Published Timetable created');
 
     console.log('Seeding complete!');
     process.exit();
