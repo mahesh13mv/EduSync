@@ -99,6 +99,10 @@ const TimetableView = () => {
     }
   }, [user, timetable])
 
+  const handlePrint = () => {
+    window.print()
+  }
+
   const handlePublish = async () => {
     try {
       await publish(id).unwrap()
@@ -176,7 +180,7 @@ const TimetableView = () => {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Link to="/dashboard" className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-400 transition-colors">
+            <Link to="/dashboard" className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-400 transition-colors no-print">
               <ChevronLeft size={20} />
             </Link>
             <h1 className="text-xl md:text-2xl font-bold text-slate-900 leading-tight">
@@ -197,11 +201,19 @@ const TimetableView = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center bg-white border rounded-xl overflow-hidden shadow-sm">
-            <button className="p-2.5 hover:bg-slate-50 transition-colors border-r" title="Print">
+          <div className="flex items-center bg-white border rounded-xl overflow-hidden shadow-sm no-print">
+            <button 
+              onClick={handlePrint}
+              className="p-2.5 hover:bg-slate-50 transition-colors border-r" 
+              title="Print"
+            >
               <Printer size={20} className="text-slate-600" />
             </button>
-            <button className="p-2.5 hover:bg-slate-50 transition-colors" title="Download PDF">
+            <button 
+              onClick={handlePrint}
+              className="p-2.5 hover:bg-slate-50 transition-colors" 
+              title="Download PDF"
+            >
               <FileText size={20} className="text-slate-600" />
             </button>
           </div>
@@ -210,7 +222,7 @@ const TimetableView = () => {
             <button
               onClick={handlePublish}
               disabled={isPublishing}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-emerald-600 text-white px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition-all active:scale-95"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-emerald-600 text-white px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition-all active:scale-95 no-print"
             >
               <Share2 size={20} /> {isPublishing ? 'Publishing...' : 'Publish'}
             </button>
