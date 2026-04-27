@@ -14,7 +14,34 @@ import BatchManagement from './pages/BatchManagement'
 import GenerateTimetable from './pages/GenerateTimetable'
 import TimetableView from './pages/TimetableView'
 
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useGetMeQuery } from './features/auth/authApi'
+import { logout } from './features/auth/authSlice'
+
 function App() {
+  const { isAuthenticated } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+  
+  // Only call getMe if we have a user in localStorage but no accessToken
+  const { isLoading, isError } = useGetMeQuery(undefined, {
+    skip: !isAuthenticated,
+  })
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(logout())
+    }
+  }, [isError, dispatch])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
+
   return (
     <BrowserRouter>
       <Toaster position="top-right" />

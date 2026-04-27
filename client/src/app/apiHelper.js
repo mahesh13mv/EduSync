@@ -3,6 +3,7 @@ import { logout, setAccessToken } from '../features/auth/authSlice'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.accessToken
     if (token) {
