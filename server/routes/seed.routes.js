@@ -57,7 +57,51 @@ router.get('/', async (req, res) => {
       { code: 'PH101', name: 'Engineering Physics', credits: 4, hoursPerWeek: 4, courseType: 'theory', requiredRoomType: 'classroom' }
     ]);
 
-    // 6. Link extra users
+    // 6. Create a Published Timetable for CSE-A
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // This Monday
+    
+    await Timetable.create({
+      batch: batches[0]._id,
+      weekStartDate: startDate,
+      status: 'published',
+      slots: [
+        {
+          day: 'Monday',
+          startTime: '09:00',
+          endTime: '10:00',
+          course: courses[0]._id,
+          teacher: teachers[0]._id,
+          room: rooms[0]._id
+        },
+        {
+          day: 'Monday',
+          startTime: '10:00',
+          endTime: '11:00',
+          course: courses[1]._id,
+          teacher: teachers[1]._id,
+          room: rooms[2]._id
+        },
+        {
+          day: 'Tuesday',
+          startTime: '09:00',
+          endTime: '10:00',
+          course: courses[3]._id,
+          teacher: teachers[2]._id,
+          room: rooms[0]._id
+        },
+        {
+          day: 'Wednesday',
+          startTime: '11:00',
+          endTime: '13:00', // 2 hour lab
+          course: courses[2]._id,
+          teacher: teachers[3]._id,
+          room: rooms[1]._id
+        }
+      ]
+    });
+
+    // 7. Link extra users
     await User.create({
       name: 'Dr. Sarah Wilson',
       email: 'sarah.wilson@edusync.com',
