@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLoginMutation } from '../features/auth/authApi'
 import { setCredentials } from '../features/auth/authSlice'
 import { toast } from 'react-hot-toast'
-import { LogIn, Calendar, Lock, Mail, Loader2, Eye, EyeOff } from 'lucide-react'
+import { LogIn, Calendar, Lock, Mail, Loader2, Eye, EyeOff, ShieldCheck, UserCog, GraduationCap } from 'lucide-react'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -97,8 +97,38 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t text-center">
-          <p className="text-sm text-slate-500">
+        <div className="mt-8 pt-6 border-t">
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center mb-4">Quick Login for Demo</p>
+          <div className="grid grid-cols-3 gap-3">
+            <button
+              onClick={() => { setEmail('admin@edusync.com'); setPassword('admin123'); }}
+              className="flex flex-col items-center gap-2 p-3 rounded-xl border border-slate-100 hover:border-primary/30 hover:bg-primary/5 transition-all group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center text-slate-500 group-hover:text-primary transition-colors">
+                <ShieldCheck size={20} />
+              </div>
+              <span className="text-xs font-bold text-slate-600">Admin</span>
+            </button>
+            <button
+              onClick={() => { setEmail('sarah.wilson@edusync.com'); setPassword('password123'); }}
+              className="flex flex-col items-center gap-2 p-3 rounded-xl border border-slate-100 hover:border-primary/30 hover:bg-primary/5 transition-all group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center text-slate-500 group-hover:text-primary transition-colors">
+                <UserCog size={20} />
+              </div>
+              <span className="text-xs font-bold text-slate-600">Teacher</span>
+            </button>
+            <button
+              onClick={() => { setEmail('john.doe@edusync.com'); setPassword('password123'); }}
+              className="flex flex-col items-center gap-2 p-3 rounded-xl border border-slate-100 hover:border-primary/30 hover:bg-primary/5 transition-all group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center text-slate-500 group-hover:text-primary transition-colors">
+                <GraduationCap size={20} />
+              </div>
+              <span className="text-xs font-bold text-slate-600">Student</span>
+            </button>
+          </div>
+          <p className="mt-6 text-sm text-slate-500 text-center">
             Forgot your password? Please contact your institution's administrator.
           </p>
         </div>
