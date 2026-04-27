@@ -51,7 +51,6 @@ app.use('/api/rooms', require('./routes/room.routes'));
 app.use('/api/courses', require('./routes/course.routes'));
 app.use('/api/batches', require('./routes/batch.routes'));
 app.use('/api/timetable', require('./routes/timetable.routes'));
-app.use('/api/seed', require('./routes/seed.routes'));
 
 // Socket.io Handlers
 require('./socket/socket')(io);
