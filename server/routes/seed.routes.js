@@ -28,10 +28,10 @@ router.get('/', async (req, res) => {
 
     // 2. Create Teachers
     const teachers = await Teacher.create([
-      { name: 'Dr. Alan Turing', email: 'turing@edusync.com', specialization: 'Computer Science', availability: ['Monday', 'Tuesday', 'Wednesday'] },
-      { name: 'Prof. Ada Lovelace', email: 'lovelace@edusync.com', specialization: 'Mathematics', availability: ['Wednesday', 'Thursday', 'Friday'] },
-      { name: 'Dr. Sarah Wilson', email: 'sarah.wilson@edusync.com', specialization: 'Physics', availability: ['Monday', 'Thursday', 'Friday'] },
-      { name: 'Prof. Mike Brown', email: 'mike@edusync.com', specialization: 'CS', availability: ['Tuesday', 'Wednesday', 'Friday'] }
+      { name: 'Dr. Alan Turing', email: 'turing@edusync.com', specialization: 'Computer Science', availability: [{ day: 'Monday' }, { day: 'Tuesday' }, { day: 'Wednesday' }] },
+      { name: 'Prof. Ada Lovelace', email: 'lovelace@edusync.com', specialization: 'Mathematics', availability: [{ day: 'Wednesday' }, { day: 'Thursday' }, { day: 'Friday' }] },
+      { name: 'Dr. Sarah Wilson', email: 'sarah.wilson@edusync.com', specialization: 'Physics', availability: [{ day: 'Monday' }, { day: 'Thursday' }, { day: 'Friday' }] },
+      { name: 'Prof. Mike Brown', email: 'mike@edusync.com', specialization: 'CS', availability: [{ day: 'Tuesday' }, { day: 'Wednesday' }, { day: 'Friday' }] }
     ]);
 
     // 3. Create Rooms
