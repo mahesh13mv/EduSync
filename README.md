@@ -169,9 +169,6 @@ edusync/
 
 This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
 
-## Contribution Guidelines
-Please create a feature branch before submitting pull requests.
-
 ---
 
 <p align="center">
